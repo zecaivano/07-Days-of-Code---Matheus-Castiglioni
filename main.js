@@ -8,17 +8,23 @@ pessoas.forEach ((elemento) => {
 
 form.addEventListener("submit", (evento) => {
     evento.preventDefault()
-     
+    
     const nome = evento.target.elements['name']
     const nascimento = evento.target.elements['birth-date']
+    const existe = pessoas.find(elemento => elemento.nome === nome.value)
     const pessoa = {
         "nome": nome.value,
-        "nascimento": nascimento.value
+        "nascimento": nascimento.value,
     }
-
-    criaElemento(pessoa)
-    
-    pessoas.push(pessoa)
+    if (existe) {
+        pessoa.id = existe.id
+        atualizaElemento(pessoa)
+        pessoas[pessoas.findIndex(elemento => elemento.id === existe.id)] = pessoa
+    } else {
+        pessoa.id = pessoas[pessoas.length - 1] ? (pessoas[pessoas.length - 1]).id + 1 : 0
+        criaElemento(pessoa)
+        pessoas.push(pessoa)
+    }
     localStorage.setItem("pessoas", JSON.stringify(pessoas))
 
     nome.value = ''
@@ -32,7 +38,39 @@ function criaElemento(linha) {
     const celulaNome = document.createElement('strong')
     celulaNome.innerHTML = linha.nome
     novaLinha.appendChild(celulaNome)
-    novaLinha.innerHTML += linha.nascimento
+    
+    const celulaNascimento = document.createElement('em')
+    celulaNascimento.innerHTML = linha.nascimento
+    celulaNascimento.dataset.id = linha.id
+    novaLinha.appendChild(celulaNascimento)
 
+    novaLinha.appendChild(botaoEditar(linha.id))
     lista.appendChild(novaLinha)
+}
+
+function botaoEditar(id) {
+    const elementoBotao = document.createElement("button")
+    const elementoI = document.createElement("i")
+    elementoBotao.appendChild(elementoI)
+    elementoI.classList.add("fa-solid")
+    elementoI.classList.add("fa-pen-to-square")
+
+    elementoBotao.addEventListener('click', function() {
+        index = pessoas.indexOf(this.parentNode)
+       editaElemento(this.parentNode, id);
+    })
+    return elementoBotao
+}
+
+function editaElemento(tag, id) {
+    document.querySelector("#name").value = tag.children[0].textContent
+    document.querySelector("#birth-date").value = tag.children[1].textContent
+    document.querySelector('#name').focus()
+    tag.remove()
+    pessoas.splice(pessoas.findIndex(elemento => elemento.id === id), 1)
+    localStorage.setItem("pessoas", JSON.stringify(pessoas))
+}
+
+function atualizaElemento(pessoa) {
+    document.querySelector("[data-id='"+pessoa.id+"']").innerHTML = pessoa.nascimento;
 }
