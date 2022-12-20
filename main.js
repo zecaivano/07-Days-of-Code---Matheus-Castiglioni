@@ -45,6 +45,7 @@ function criaElemento(linha) {
     novaLinha.appendChild(celulaNascimento)
 
     novaLinha.appendChild(botaoEditar(linha.id))
+    novaLinha.appendChild(botaoDeletar(linha.id))
     lista.appendChild(novaLinha)
 }
 
@@ -66,11 +67,29 @@ function editaElemento(tag, id) {
     document.querySelector("#name").value = tag.children[0].textContent
     document.querySelector("#birth-date").value = tag.children[1].textContent
     document.querySelector('#name').focus()
+    deletaElemento (tag, id)
+}
+
+function atualizaElemento(pessoa) {
+    document.querySelector("[data-id='"+pessoa.id+"']").innerHTML = pessoa.nascimento;
+}
+
+function deletaElemento (tag, id) {
     tag.remove()
     pessoas.splice(pessoas.findIndex(elemento => elemento.id === id), 1)
     localStorage.setItem("pessoas", JSON.stringify(pessoas))
 }
 
-function atualizaElemento(pessoa) {
-    document.querySelector("[data-id='"+pessoa.id+"']").innerHTML = pessoa.nascimento;
+function botaoDeletar(id) {
+    const elementoBotao = document.createElement("button")
+    const elementoI = document.createElement("i")
+    elementoBotao.appendChild(elementoI)
+    elementoI.classList.add("fa-solid")
+    elementoI.classList.add("fa-trash")
+
+    elementoBotao.addEventListener('click', function() {
+        index = pessoas.indexOf(this.parentNode)
+       deletaElemento(this.parentNode, id);
+    })
+    return elementoBotao
 }
