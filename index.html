@@ -10,20 +10,24 @@
     <script src="https://kit.fontawesome.com/e453c500b7.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Cadastro de pessoas</h1>
-    <form class="form js-form">
-        <label for="name">
-            Nome
-            <input class="form-field js-field" id="name" maxlength="120" minlength="3" name="name" required type="text" pattern="([aA-zZ]+)">
-        </label>
-        <label for="birth-date">
-            Data de Nascimento
-            <input class="form-field js-field" id="birth-date" name="birth-date" required type="date" pattern="\d{2}/(0[1-9]|1[012])/\d{4}">
-        </label>
-        <button type="submit" class="salvar">Salvar</button>
-    </form>
-    <ul class="list-group" id="lista">
-    </ul>
+    <h1 class="titulo">Meus Aniversários</h1>
+    <main class="principal">
+        <form class="form js-form">
+            <label for="name">
+                <p>Nome</p> 
+                <input class="form-field js-field" id="name" maxlength="120" minlength="3" name="name" required type="text" pattern="([aA-zZ]+)">
+            </label>
+            <label for="birth-date">
+                <p>Data de Nascimento</p>
+                <input class="form-field js-field" id="birth-date" name="birth-date" required type="date" pattern="\d{2}/(0[1-9]|1[012])/\d{4}">
+            </label>
+            <div>
+                <button type="submit" class="salvar">Salvar</button>
+            </div>
+        </form>
+        <ul class="list-group" id="lista">
+        </ul>
+    </main>
     <script src="./main.js"></script>
 </body>
 </html>

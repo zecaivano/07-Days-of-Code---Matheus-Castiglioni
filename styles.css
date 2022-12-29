@@ -1,3 +1,31 @@
+.titulo {
+    padding: 60px;
+    text-align: center;
+    background-color: cadetblue;
+    color: white;
+}
+.form-field {
+    width: 60vw;
+    margin-bottom: 15px;
+}
+
+.salvar {
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    width: 100px;
+    padding:5px 30px;
+    text-align: center;
+    align-items: center;
+}
+.principal {
+    margin: 20px;
+}
+p {
+    font-weight: bold;
+}
+
 .list-group {
     align-items: center;
 }
